@@ -1,0 +1,13 @@
+## Interface: 16001
+## Title: AnyReagent
+## Notes: Ajoute au menu Filtre des métiers « Au moins un composant dans les sacs » : ne montre que les recettes dont vous avez au moins un composant requis.
+## Author: VDRomain
+## Version: 0.1.0
+## SavedVariables: AnyReagentDB
+## X-Category: Professions
+## IconTexture: Interface\Icons\Trade_Alchemy
+## AddonCompartmentFunc: AnyReagent_OnAddonCompartmentClick
+## AddonCompartmentFuncOnEnter: AnyReagent_OnAddonCompartmentEnter
+## AddonCompartmentFuncOnLeave: AnyReagent_OnAddonCompartmentLeave
+
+AnyReagent.lua
