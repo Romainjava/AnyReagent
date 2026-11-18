@@ -15,23 +15,36 @@ local DB_NAME = "AnyReagentDB"
 local CHAT_PREFIX = "[AnyReagent] "
 local MENU_TITLE = "AnyReagent"
 
--- Player-facing text: English keys, French on a frFR client. A missing key
--- shows the key itself.
-local FRENCH = {
-	["At least one reagent in the bags"] = "Au moins un composant dans les sacs",
-	["Click: turn the filter on / off"] = "Clic : activer / désactiver le filtre",
-	["Filter on"] = "Filtre activé",
-	["Filter off"] = "Filtre désactivé",
-	["filter error: %s"] = "filtre en erreur : %s",
-	["cannot refresh the list: %s"] = "rafraîchissement impossible : %s",
-	["settings not loaded yet, try again in a moment."] = "réglages pas encore chargés, réessaie dans un instant.",
+-- Player-facing text.
+-- English is the fallback language (the keys themselves).
+local TRANSLATIONS = {
+    frFR = {
+        ["At least one reagent in the bags"] = "Au moins un composant dans les sacs",
+        ["Click: turn the filter on / off"] = "Clic : activer / désactiver le filtre",
+        ["Filter on"] = "Filtre activé",
+        ["Filter off"] = "Filtre désactivé",
+        ["filter error: %s"] = "Erreur du filtre : %s",
+        ["cannot refresh the list: %s"] = "Impossible d'actualiser la liste : %s",
+        ["settings not loaded yet, try again in a moment."] = "Les paramètres ne sont pas encore chargés, réessayez dans un instant.",
+    },
+
+    deDE = {
+        ["At least one reagent in the bags"] = "Mindestens ein Material in den Taschen",
+        ["Click: turn the filter on / off"] = "Klicken: Filter ein- oder ausschalten",
+        ["Filter on"] = "Filter aktiviert",
+        ["Filter off"] = "Filter deaktiviert",
+        ["filter error: %s"] = "Filterfehler: %s",
+        ["cannot refresh the list: %s"] = "Die Liste kann nicht aktualisiert werden: %s",
+        ["settings not loaded yet, try again in a moment."] = "Einstellungen noch nicht geladen. Bitte versuche es gleich noch einmal.",
+    },
 }
-local function IsFrench()
-	if type(GetLocale) ~= "function" then return false end
-	local ok, locale = pcall(GetLocale)
-	return ok and locale == "frFR"
-end
-local L = setmetatable(IsFrench() and FRENCH or {}, { __index = function(_, key) return key end })
+
+local locale = GetLocale()
+local L = setmetatable(TRANSLATIONS[locale] or {}, {
+    __index = function(_, key)
+        return key
+    end,
+})
 
 local MENU_LABEL = L["At least one reagent in the bags"]
 local MENU_HINT = L["Click: turn the filter on / off"]
