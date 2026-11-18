@@ -1,90 +1,90 @@
 # AnyReagent
 
-Filtre « au moins un composant » pour la fenêtre de métier de World of Warcraft
-« Forever » 1.60.1 (`## Interface: 16001`).
+*Version française : [README.fr.md](README.fr.md)*
 
-Le filtre de Blizzard (« Avez les composants ») ne garde une recette que si **tous** ses
-composants sont dans les sacs. AnyReagent en ajoute un autre : il ne garde que les recettes
-dont vous avez **au moins un** composant requis, donc les recettes que vous pouvez commencer
-à farmer.
+An "at least one reagent" filter for the profession window of World of Warcraft
+"Forever" 1.60.1 (`## Interface: 16001`).
 
-## Ce que fait l'addon
+Blizzard's filter ("Have Materials") only keeps a recipe when **all** of its reagents are in
+your bags. AnyReagent adds another one: it keeps the recipes you have **at least one** required
+reagent for, so the recipes you can start farming for.
 
-- Une case à cocher **« Au moins un composant dans les sacs »** dans le menu **Filtre** de la
-  fenêtre de métier, sous un titre `AnyReagent`, séparée par un trait.
-- Cochée, la liste des recettes ne montre que les recettes pour lesquelles au moins **un
-  composant requis** est dans les sacs. Les catégories que le filtre vide perdent leur en-tête,
-  les lignes d'espacement qui ne servent plus sont retirées et le séparateur « non appris »
-  disparaît quand il ne reste plus de recette non apprise.
-- Seuls les sacs et la sacoche de composants comptent : **la banque n'est pas comptée**.
-- Les composants **facultatifs** d'une recette ne suffisent pas à la faire apparaître, et les
-  emplacements d'un autre type que les composants de base (reagents de qualité) sont ignorés.
-- Une recette dont le client ne sait pas décrire les composants, ou qui n'en a aucun, reste
-  visible : l'addon ne cache jamais une recette sur une information incertaine.
-- La liste se rafraîchit toute seule quand les sacs changent pendant que la fenêtre de métier
-  est ouverte, sans la reconstruire.
-- Le choix est enregistré (`AnyReagentDB.enabled`) et s'applique dès l'ouverture suivante.
+The addon shows English on every client except French ones, which get French.
 
-## Différence avec le filtre de Blizzard
+## What it does
 
-| Filtre | Garde la recette si |
+- A checkbox **"At least one reagent in the bags"** in the profession window's **Filter** menu,
+  under an `AnyReagent` title, set apart by a divider.
+- When checked, the recipe list only shows the recipes with at least **one required reagent**
+  in your bags. Categories the filter empties lose their header, padding rows that are no longer
+  needed are removed, and the "unlearned" divider goes away when no unlearned recipe is left.
+- Only the bags and the reagent bag count: **the bank is not counted**.
+- A recipe's **optional** reagents are not enough to show it, and slots of any other type than
+  basic reagents (quality reagents) are ignored.
+- A recipe whose reagents the client cannot describe, or that has none, stays visible: the addon
+  never hides a recipe on uncertain information.
+- The list refreshes by itself when your bags change while the profession window is open,
+  without rebuilding it.
+- The choice is saved (`AnyReagentDB.enabled`) and applies the next time you open the window.
+
+## Difference from Blizzard's filter
+
+| Filter | Keeps the recipe if |
 | --- | --- |
-| Blizzard, « Avez les composants » | tous les composants requis sont dans les sacs |
-| AnyReagent | au moins un composant requis est dans les sacs |
+| Blizzard, "Have Materials" | all required reagents are in the bags |
+| AnyReagent | at least one required reagent is in the bags |
 
-Les deux peuvent être cochés en même temps : c'est Blizzard qui filtre en premier, AnyReagent
-ne fait que retirer des lignes en plus.
+Both can be checked at once: Blizzard filters first, AnyReagent only removes more rows.
 
-## Coexistence avec les autres addons
+## Working with other addons
 
-AnyReagent ne modifie aucun autre addon et ne remplace aucune fonction de Blizzard : il ajoute
-une case au menu Filtre et retire des lignes de la liste que Blizzard a construite.
-Il ne remet en place que les lignes **qu'il a lui-même retirées**, donc un autre addon qui
-filtre la même liste (CraftProfit, par exemple, avec son filtre « rentable ») garde ses propres
-lignes masquées : décocher AnyReagent ne les fait pas revenir.
+AnyReagent changes no other addon and replaces no Blizzard function: it adds a checkbox to the
+Filter menu and removes rows from the list Blizzard built. It only puts back the rows **it removed
+itself**, so another addon filtering the same list (CraftProfit, for example, with its
+"profitable" filter) keeps its own hidden rows: unchecking AnyReagent does not bring them back.
 
 ## Installation
 
-1. Copier le dossier `AnyReagent` dans `World of Warcraft\_forever_\Interface\AddOns\`.
-2. Redémarrer le jeu ou `/reload`.
-3. Ouvrir un métier : la case est dans le menu **Filtre**, en haut de la liste des recettes.
+1. Download the addon. If you use GitHub's **Code → Download ZIP**, the folder inside is named
+   `AnyReagent-main`: rename it to `AnyReagent`.
+2. Copy the `AnyReagent` folder into `World of Warcraft\_forever_\Interface\AddOns\`.
+3. Restart the game (a new addon folder needs a full restart).
+4. Open a profession: the checkbox is in the **Filter** menu, above the recipe list.
 
-## Commandes
+## Commands
 
-- `/anyreagent` : active ou désactive le filtre, et l'annonce dans la fenêtre de discussion
-  (`[AnyReagent] Filtre activé.` / `[AnyReagent] Filtre désactivé.`).
-- Entrée dans le compartiment d'addons : un clic bascule le même réglage, le survol affiche
-  l'état et le fonctionnement du clic.
+- `/anyreagent`: turns the filter on or off, and says so in the chat window
+  (`[AnyReagent] Filter on.` / `[AnyReagent] Filter off.`).
+- Addon compartment entry: a click toggles the same setting, hovering shows the state and what
+  the click does.
 
-Il n'y a ni bouton minimap ni fenêtre de réglages : la seule interface ajoutée est la case du
-menu Filtre.
+There is no minimap button and no settings window: the only interface added is the Filter menu
+checkbox.
 
-## Points non vérifiés en jeu
+## Not verified in game
 
-Écrits à partir de l'API et de ce que fait CraftProfit sur ce client, mais **pas** testés en
-jeu :
+Written from the API and from what CraftProfit does on this client, but **not** tested in game:
 
-- **Noms de la fenêtre de métier** : `ProfessionsFrame.CraftingPage.RecipeList.ScrollBox` et
-  `Menu.ModifyMenu("MENU_PROFESSIONS_FILTER", ...)`. Si Blizzard renomme l'un des deux, la case
-  n'apparaît pas et l'addon ne fait rien (aucune erreur affichée en jeu).
-- **Retrait des lignes** : `parent:Remove(node, true)` (le `true` évite une invalidation par
-  ligne, l'addon invalide une seule fois à la fin) et `parent.sortComparator` pour replacer les
-  lignes remises. Si le comparateur n'existe pas, les lignes reviennent à leur index d'origine.
-- **Schéma des recettes** : `C_TradeSkillUI.GetRecipeSchematic(recipeID, false).reagentSlotSchematics`,
-  avec `reagentType` (`Enum.CraftingReagentType.Basic`, ou 0) et `required` par emplacement, et
-  `reagents[j].itemID` par composant.
-- **Comptage** : `C_Item.GetItemCount(itemID, false, false, true)` (sacs + sacoche), avec
-  `GetItemCount(itemID)` en secours si `C_Item` n'existe pas. Si `includeReagentBank` n'est pas
-  pris en compte sur ce client, la sacoche de composants manquera au comptage.
-- **Ligne « aucun résultat »** : `RecipeList.NoResultsText` est pilotée à partir de
-  `dataProvider:IsEmpty()` ; si Blizzard la gère aussi de son côté, c'est le dernier passage qui
-  gagne.
-- **Ordre des filtres** : AnyReagent et le filtre « Avez les composants » de Blizzard appliquent
-  leurs règles chacun sur la liste courante ; aucune combinaison n'a été vérifiée en jeu.
+- **Profession window names**: `ProfessionsFrame.CraftingPage.RecipeList.ScrollBox` and
+  `Menu.ModifyMenu("MENU_PROFESSIONS_FILTER", ...)`. If Blizzard renames either, the checkbox
+  does not appear and the addon does nothing (no error shown in game).
+- **Removing rows**: `parent:Remove(node, true)` (the `true` avoids one invalidation per row; the
+  addon invalidates once at the end) and `parent.sortComparator` to put restored rows back in
+  place. If the comparator does not exist, rows go back to their original index.
+- **Recipe schematic**: `C_TradeSkillUI.GetRecipeSchematic(recipeID, false).reagentSlotSchematics`,
+  with `reagentType` (`Enum.CraftingReagentType.Basic`, or 0) and `required` per slot, and
+  `reagents[j].itemID` per reagent.
+- **Counting**: `C_Item.GetItemCount(itemID, false, false, true)` (bags + reagent bag), with
+  `GetItemCount(itemID)` as a fallback when `C_Item` does not exist. If `includeReagentBank` is
+  not honored on this client, the reagent bag will be missing from the count.
+- **"No results" line**: `RecipeList.NoResultsText` is driven from `dataProvider:IsEmpty()`; if
+  Blizzard also manages it, the last pass wins.
+- **Filter order**: AnyReagent and Blizzard's "Have Materials" filter each apply their rules to
+  the current list; no combination has been checked in game.
 
 ## Tests
 
-`%LOCALAPPDATA%\Temp\opencode\lua-check\test-anyreagent.js` charge le vrai `AnyReagent.lua` dans
-fengari avec une fausse API du client (arbre de recettes type `TreeNodeMixin`, `ScrollBox`, menu
-Filtre, schémas, sacs, banque, événements) et vérifie les lignes réellement laissées dans la
-liste. Il se lance avec `bun test-anyreagent.js` depuis ce dossier.
+`%LOCALAPPDATA%\Temp\opencode\lua-check\test-anyreagent.js` loads the real `AnyReagent.lua` into
+fengari with a fake client API (a `TreeNodeMixin`-style recipe tree, `ScrollBox`, Filter menu,
+schematics, bags, bank, events) and checks the rows actually left in the list, on a French and
+an English client. Run it with `bun test-anyreagent.js` from that folder.
