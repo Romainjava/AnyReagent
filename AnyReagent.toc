@@ -1,6 +1,7 @@
 ## Interface: 16001
 ## Title: AnyReagent
-## Notes: Ajoute au menu Filtre des métiers « Au moins un composant dans les sacs » : ne montre que les recettes dont vous avez au moins un composant requis.
+## Notes: Adds "At least one reagent in the bags" to the profession Filter menu: shows only the recipes you have at least one required reagent for.
+## Notes-frFR: Ajoute au menu Filtre des métiers « Au moins un composant dans les sacs » : ne montre que les recettes dont vous avez au moins un composant requis.
 ## Author: VDRomain
 ## Version: 0.1.0
 ## SavedVariables: AnyReagentDB

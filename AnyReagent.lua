@@ -14,8 +14,27 @@ local addonName, ns = ...
 local DB_NAME = "AnyReagentDB"
 local CHAT_PREFIX = "[AnyReagent] "
 local MENU_TITLE = "AnyReagent"
-local MENU_LABEL = "Au moins un composant dans les sacs"
-local MENU_HINT = "Clic : activer / désactiver le filtre"
+
+-- Player-facing text: English keys, French on a frFR client. A missing key
+-- shows the key itself.
+local FRENCH = {
+	["At least one reagent in the bags"] = "Au moins un composant dans les sacs",
+	["Click: turn the filter on / off"] = "Clic : activer / désactiver le filtre",
+	["Filter on"] = "Filtre activé",
+	["Filter off"] = "Filtre désactivé",
+	["filter error: %s"] = "filtre en erreur : %s",
+	["cannot refresh the list: %s"] = "rafraîchissement impossible : %s",
+	["settings not loaded yet, try again in a moment."] = "réglages pas encore chargés, réessaie dans un instant.",
+}
+local function IsFrench()
+	if type(GetLocale) ~= "function" then return false end
+	local ok, locale = pcall(GetLocale)
+	return ok and locale == "frFR"
+end
+local L = setmetatable(IsFrench() and FRENCH or {}, { __index = function(_, key) return key end })
+
+local MENU_LABEL = L["At least one reagent in the bags"]
+local MENU_HINT = L["Click: turn the filter on / off"]
 
 local hiddenFor, hiddenList -- data provider on screen, { { parent, node, index }, ... }
 
@@ -212,11 +231,11 @@ local function ApplyFilter(dataProvider)
 	-- once per session: the bag refresh would repeat the same error on every loot
 	if not ok and not ns.warned then
 		ns.warned = true
-		Print("filtre en erreur : " .. tostring(err))
+		Print(L["filter error: %s"]:format(tostring(err)))
 	end
 	if changed and type(dataProvider.Invalidate) == "function" then
 		local okInvalidate, errInvalidate = pcall(dataProvider.Invalidate, dataProvider)
-		if not okInvalidate then Print("rafraîchissement impossible : " .. tostring(errInvalidate)) end
+		if not okInvalidate then Print(L["cannot refresh the list: %s"]:format(tostring(errInvalidate))) end
 	end
 	return changed
 end
@@ -248,7 +267,7 @@ function ns.SetEnabled(enabled)
 	if type(ns.db) ~= "table" then return end
 	ns.db.enabled = enabled
 	RefilterList()
-	Print(string.format("Filtre %s.", enabled and "activé" or "désactivé"))
+	Print((enabled and L["Filter on"] or L["Filter off"]) .. ".")
 end
 
 -----------------------------------------------------------------------------
@@ -317,7 +336,7 @@ if SlashCmdList then
 	SLASH_ANYREAGENT1 = "/anyreagent"
 	SlashCmdList["ANYREAGENT"] = function()
 		if type(ns.db) ~= "table" then
-			Print("réglages pas encore chargés, réessaie dans un instant.")
+			Print(L["settings not loaded yet, try again in a moment."])
 			return
 		end
 		ns.SetEnabled(not IsEnabled())
@@ -332,7 +351,7 @@ local function ShowTooltip(owner)
 	if not GameTooltip or type(ns.db) ~= "table" then return end
 	GameTooltip:SetOwner(owner, "ANCHOR_LEFT")
 	GameTooltip:AddLine(MENU_TITLE)
-	GameTooltip:AddLine(IsEnabled() and "Filtre activé" or "Filtre désactivé", 0.5, 0.8, 1)
+	GameTooltip:AddLine(IsEnabled() and L["Filter on"] or L["Filter off"], 0.5, 0.8, 1)
 	GameTooltip:AddLine(MENU_HINT, 1, 1, 1)
 	GameTooltip:Show()
 end
