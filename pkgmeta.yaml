@@ -1,0 +1,7 @@
+package-as: AnyReagent
+
+ignore:
+  - .gitignore
+  - README.md
+  - README.fr.md
+  - pkgmeta.yaml
